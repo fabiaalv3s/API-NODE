@@ -1,0 +1,105 @@
+unit MainForm;
+
+interface
+
+uses
+  Winapi.Windows
+  , Winapi.Messages
+  , System.SysUtils
+  , System.Variants
+  , System.Classes
+  , Vcl.Graphics
+  , Vcl.Controls
+  , Vcl.Forms
+  , Vcl.Dialogs
+  , Vcl.StdCtrls
+  , Vcl.Grids, Vcl.ExtCtrls
+  , TaskService
+  , TaskModel
+  ;
+
+type
+  TfrmMain = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    btnLoadTasks: TButton;
+    btnAddTask: TButton;
+    btnUpdateTask: TButton;
+    btnDeleteTask: TButton;
+    StringGridTasks: TStringGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure btnLoadTasksClick(Sender: TObject);
+    procedure btnAddTaskClick(Sender: TObject);
+    procedure btnUpdateTaskClick(Sender: TObject);
+    procedure btnDeleteTaskClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure LoadTasks;
+    procedure DisplayTasks(const Tasks: TArray<TTask>);
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMain: TfrmMain;
+
+implementation
+
+{$R *.dfm}
+procedure TfrmMain.FormCreate(Sender: TObject);
+begin
+  StringGridTasks.ColCount := 3;
+  StringGridTasks.Cells[0, 0] := 'ID';
+  StringGridTasks.Cells[1, 0] := 'Title';
+  StringGridTasks.Cells[2, 0] := 'Status';
+end;
+
+procedure TfrmMain.LoadTasks;
+var
+  TaskService: TTaskService;
+  Tasks: TArray<TTask>;
+begin
+  TaskService := TTaskService.Create;
+  try
+    Tasks := TaskService.GetAllTasks;
+    DisplayTasks(Tasks);
+  finally
+    TaskService.Free;
+  end;
+end;
+
+procedure TfrmMain.DisplayTasks(const Tasks: TArray<TTask>);
+var
+  I: Integer;
+begin
+  StringGridTasks.RowCount := Length(Tasks) + 1;
+  for I := 0 to High(Tasks) do
+  begin
+    StringGridTasks.Cells[0, I+1] := Tasks[I].ID.ToString;
+    StringGridTasks.Cells[1, I+1] := Tasks[I].Title;
+    StringGridTasks.Cells[2, I+1] := Tasks[I].Status;
+  end;
+end;
+
+procedure TfrmMain.btnLoadTasksClick(Sender: TObject);
+begin
+  LoadTasks;
+end;
+
+procedure TfrmMain.btnAddTaskClick(Sender: TObject);
+begin
+  // Código para adicionar uma tarefa
+end;
+
+procedure TfrmMain.btnUpdateTaskClick(Sender: TObject);
+begin
+  // Código para atualizar uma tarefa
+end;
+
+procedure TfrmMain.btnDeleteTaskClick(Sender: TObject);
+begin
+  // Código para deletar uma tarefa
+end;
+
+
+end.

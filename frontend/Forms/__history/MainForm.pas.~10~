@@ -1,0 +1,68 @@
+unit MainForm;
+
+interface
+
+uses
+  Winapi.Windows
+  , Winapi.Messages
+  , System.SysUtils
+  , System.Variants
+  , System.Classes
+  , Vcl.Graphics
+  , Vcl.Controls
+  , Vcl.Forms
+  , Vcl.Dialogs
+  , Vcl.StdCtrls
+  , Vcl.Grids, Vcl.ExtCtrls
+//  , TaskService
+//  , TaskModel
+  ;
+
+type
+  TfrmMain = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    btnLoadTasks: TButton;
+    btnAddTask: TButton;
+    btnUpdateTask: TButton;
+    btnDeleteTask: TButton;
+    StringGridTasks: TStringGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure btnLoadTasksClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure LoadTasks;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMain: TfrmMain;
+
+implementation
+
+{$R *.dfm}
+
+//procedure TfrmMain.LoadTasks;
+//var
+//  TaskService: TTaskService;
+//  Tasks: TArray<TTask>;
+//begin
+//  TaskService := TTaskService.Create;
+//  try
+//    Tasks := TaskService.GetAllTasks;
+//    DisplayTasks(Tasks);
+//  finally
+//    TaskService.Free;
+//  end;
+//end;
+
+procedure TfrmMain.FormCreate(Sender: TObject);
+begin
+  StringGridTasks.ColCount := 3;
+  StringGridTasks.Cells[0, 0] := 'ID';
+  StringGridTasks.Cells[1, 0] := 'Title';
+  StringGridTasks.Cells[2, 0] := 'Status';
+end;
+
+end.
